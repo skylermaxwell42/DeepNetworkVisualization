@@ -7,8 +7,12 @@ addpath('utils/');
 import conv_block.*
 import extract_features.*
 import relu.*
+import load_images.*
+
 %% Loading Images and Weight Data
 load('layer_1_weights.mat')
+images = load_images('/Users/maxwels2/Documents/Fall_2018/ELC433/final_project/DeepNetworkVisualization/images/', 10);
+
 
 %% Filter and Plotting Images 
 [I] = imread('peppers.png');
