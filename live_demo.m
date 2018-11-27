@@ -17,13 +17,13 @@ filter = w(:, :, :, filt_num);
 
 %% Setting Up WebCam
 cam = webcam;
-figure
+im_show_size = 256;
 while 1
    im = imresize(snapshot(cam), [256, 256]);
-   figure(1)
-   imshow(im)
    im_feats = extract_features(filter, im);
-   figure(2)
-   imshow(imresize(im_feats, [256, 256]));
+   subplot(1, 2, 1)
+   imshow(imresize(im, [im_show_size, im_show_size]))  
+   subplot(1, 2, 2)
+   imshow(imresize(im_feats, [im_show_size, im_show_size]))
 end
 clear('cam')
