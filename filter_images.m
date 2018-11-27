@@ -13,26 +13,31 @@ import load_images.*
 load('layer_1_weights.mat')
 images = load_images('/Users/maxwels2/Documents/Fall_2018/ELC433/final_project/DeepNetworkVisualization/images/', 10);
 
-
 %% Filter and Plotting Images 
-[I] = imread('peppers.png');
-figure(1)
-subplot(2,2,1)
-imshow(I)
-title('Original Image')
 
-sz = size(I);
-I = I(1:227,1:227,:);
-subplot(2,2,2)
-imshow(I)
-title('Resized Image')
+filt_num = input('Enter the filter index to analyze: \n>');
+filter = w(:,:,:,filt_num);
+filter_upsample = imresize(filter, [256 256]);
 
-filter = w(:,:,:,56);
-subplot(2,2,4)
-im_feats = extract_features(filter, I);
-activations = relu(im_feats);
-imshow(activations)
-title('Our Extracted Features');
+for IMG_IDX = 1:length(images)-1
+    im = images(:, :, :, IMG_IDX);
+    im_feats = extract_features(filter, im);
+    im_feats_upsample = imresize(im_feats, [256, 256]);
+    
+    f = figure('visible','off');
+    subplot(1, 3, 1)
+    imshow(im)
+    title('Original Image')
+    subplot(1, 3, 2)
+    imshow(filter)
+    title('Filter')
+    subplot(1, 3, 3)
+    imshow(im_feats)
+    title('Extracted Features')
+    file_name = sprintf('results/test_%0d.jpg', IMG_IDX);
+    saveas(f, file_name)
+end
+
 
 
 
